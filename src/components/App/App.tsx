@@ -5,10 +5,10 @@ import ImageGallery from '../ImageGallery/ImageGallery';
 import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn';
 import { ImageModal } from '../ImageModal/ImageModal';
 import { MoonLoader } from 'react-spinners';
-import { ErrorMessage } from '../ErrorMessage/ErrorMesage';
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage';
 import Modal from 'react-modal';
 import { fetchData } from '../../api/fun-api';
-import { ImageData, ApiResponse } from '../../types'; 
+import { ImageData, ApiResponse } from '../../types';
 
 Modal.setAppElement('#root');
 
@@ -22,19 +22,19 @@ function App(): JSX.Element {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalData, setModalData] = useState<ImageData | null>(null);
 
-  const openModalImage = (image: ImageData) => {
+  const openModalImage = (image: ImageData): void => {
     document.body.style.overflow = 'hidden';
     setIsModalOpen(true);
     setModalData(image);
   };
 
-  const closeModalImage = () => {
+  const closeModalImage = (): void => {
     document.body.style.overflow = 'visible';
     setIsModalOpen(false);
     setModalData(null);
   };
 
-  const submitForm = (newQuery: string) => {
+  const submitForm = (newQuery: string): void => {
     if (!newQuery.trim()) return;
     setPage(1);
     setTotalPages(1);
@@ -43,14 +43,14 @@ function App(): JSX.Element {
     setImgData([]);
   };
 
-  const onChange = () => {
+  const loadMore = (): void => {
     setPage((prevPage) => prevPage + 1);
   };
 
   useEffect(() => {
     if (!query) return;
 
-    async function fetchDataFromAPI() {
+    const fetchDataFromAPI = async (): Promise<void> => {
       try {
         setIsLoading(true);
         const data: ApiResponse = await fetchData(query, page);
@@ -62,7 +62,7 @@ function App(): JSX.Element {
       } finally {
         setIsLoading(false);
       }
-    }
+    };
 
     fetchDataFromAPI();
   }, [page, query]);
@@ -73,19 +73,19 @@ function App(): JSX.Element {
 
       {!isError ? (
         imgData.length > 0 ? (
-          <ImageGallery photos={imgData} openModal={openModalImage} />
+          <ImageGallery photos={imgData} openModal={openModalImage} bottomRef={null} />
         ) : (
           query && !isLoading && (
             <p style={{ textAlign: 'center' }}>
-              No results found for "{query}"
+              No results found for &quot;{query}&quot;
             </p>
           )
         )
       ) : (
-        <ErrorMessage message={'Something went wrong...'} />
+        <ErrorMessage message="Something went wrong..." />
       )}
 
-      {totalPages > page && !isLoading && <LoadMoreBtn onClick={onChange} />}
+      {totalPages > page && !isLoading && <LoadMoreBtn onClick={loadMore} />}
 
       {isLoading && (
         <MoonLoader
@@ -105,4 +105,3 @@ function App(): JSX.Element {
 }
 
 export default App;
-
