@@ -1,9 +1,9 @@
 import Modal from 'react-modal';
 import css from './ImageModal.module.css';
-import { Photo } from '../../types';
+import { ImageData } from '../../types';
 
 interface ImageModalProps {
-  image: Photo;
+  image: ImageData;
   isOpen: boolean;
   isClose: () => void;
 }
@@ -59,3 +59,4 @@ export function ImageModal({ image, isOpen, isClose }: ImageModalProps): JSX.Ele
     </Modal>
   );
 }
+

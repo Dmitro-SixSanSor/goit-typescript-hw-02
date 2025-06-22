@@ -1,19 +1,19 @@
 import axios from 'axios';
-import { ApiResponse } from '../types'; 
+import { ApiResponse } from '../types';
 
-const BASE_URL = 'https://api.unsplash.com/';
-const KEY_ID = '76YFQ0LUyPvjVwj6tmIY34NXYLiz7iDoOn_Z9oT6DRQ';
+const API_KEY = '76YFQ0LUyPvjVwj6tmIY34NXYLiz7iDoOn_Z9oT6DRQ';
+const BASE_URL = 'https://api.unsplash.com/search/photos';
 
 export const fetchData = async (
   query: string,
   page: number
 ): Promise<ApiResponse> => {
-  const response = await axios.get<ApiResponse>(`${BASE_URL}search/photos`, {
+  const response = await axios.get<ApiResponse>(BASE_URL, {
     params: {
-      client_id: KEY_ID,
-      query: query,
-      page: page,
+      query,
+      page,
       per_page: 12,
+      client_id: API_KEY,
     },
   });
 

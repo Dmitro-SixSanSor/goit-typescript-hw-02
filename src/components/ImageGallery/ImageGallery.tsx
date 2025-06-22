@@ -1,11 +1,11 @@
-import React from "react";
-import ImageCard from "../ImageCard/ImageCard";
-import css from "./ImageGallery.module.css";
-import { Photo } from "../../types";
+import React from 'react';
+import ImageCard from '../ImageCard/ImageCard';
+import css from './ImageGallery.module.css';
+import { ImageData } from '../../types';
 
 interface ImageGalleryProps {
-  photos: Photo[];
-  openModal: (photo: Photo) => void;
+  photos: ImageData[];
+  openModal: (photo: ImageData) => void;
   bottomRef: React.RefObject<HTMLDivElement> | null;
 }
 
@@ -33,3 +33,4 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ photos, openModal, bottomRe
 };
 
 export default ImageGallery;
+
